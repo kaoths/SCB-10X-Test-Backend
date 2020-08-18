@@ -6,6 +6,7 @@ import { AuthModule } from './auth/auth.module';
 import { UserModule } from './user/user.module';
 import { ConfigModule } from '@nestjs/config';
 import { JwtMiddleware } from './middlewares/jwt.middleware';
+import { PartyModule } from './party/party.module';
 
 @Module({
   imports: [
@@ -16,7 +17,8 @@ import { JwtMiddleware } from './middlewares/jwt.middleware';
       useUnifiedTopology: true,
     }),
     AuthModule,
-    UserModule
+    UserModule,
+    PartyModule
   ],
   controllers: [AppController],
   providers: [AppService],

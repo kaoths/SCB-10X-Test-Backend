@@ -3,8 +3,11 @@ import { prop, mongoose } from '@typegoose/typegoose';
 export class User {
   _id?: mongoose.Types.ObjectId;
 
-  @prop({ required: true, unique: true })
+  @prop()
   username: string;
+
+  @prop({ required: true, unique: true })
+  email: string;
 
   @prop({ required: true, select: false })
   password: string;
