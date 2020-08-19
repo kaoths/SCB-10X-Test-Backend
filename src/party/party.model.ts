@@ -12,4 +12,7 @@ export class Party {
 
   @prop({ ref: User, required: false })
   members?: (Ref<User> | string)[];
+
+  @prop({ ref: User, required: true })
+  owner: Ref<User> | string;
 }

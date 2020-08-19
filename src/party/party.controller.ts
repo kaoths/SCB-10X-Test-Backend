@@ -1,4 +1,11 @@
-import { Body, Controller, Get, Param, Post, UseGuards } from '@nestjs/common';
+import {
+  Body,
+  Controller, Delete,
+  Get,
+  Param,
+  Post,
+  UseGuards,
+} from '@nestjs/common';
 import { AuthGuard } from '../guards/auth.guard';
 import { PartyService } from './party.service';
 import { UserId } from '../decorators/user-id.decorator';
@@ -14,6 +21,11 @@ export class PartyController {
     return this.service.find();
   }
 
+  @Get(":id")
+  findById(@Param('id') partyId: string) {
+    return this.service.findById(partyId);
+  }
+
   @Get("joined")
   findJoinedParty(@UserId() id: string) {
     return this.service.find({ members: id })
@@ -26,6 +38,15 @@ export class PartyController {
   ) {
     return this.service.createParty(dto, creatorId);
   }
+
+  @Delete(':id')
+  deleteParty(
+    @UserId() userId: string,
+    @Param('id') partyId: string
+  ) {
+    return this.service.deleteParty(userId, partyId);
+  }
+
 
   @Post(":id/join")
   joinParty(@UserId() userId: string, @Param('id') partyId: string) {

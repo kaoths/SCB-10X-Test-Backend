@@ -13,9 +13,13 @@ export class PartyService {
     return this.model.find(filter).exec();
   }
 
+  findById(id: string): Promise<Party> {
+    return this.model.findById(id).exec();
+  }
+
   createParty({ title, total }: Party, creatorId: string) {
     const party = new this.model({
-      title, total, members: [ creatorId ],
+      title, total, members: [ creatorId ], owner: creatorId
     });
     return party.save();
   }
@@ -39,11 +43,22 @@ export class PartyService {
     if (!exist) throw new BadRequestException('Invalid Party ID');
 
     const party = await this.model.findById(partyId);
-
+    if (userId === party.owner) throw new BadRequestException("Owner cannot leave party")
     const joined = party.members.includes(userId);
     if (!joined) throw new BadRequestException('User is not a member of the party');
 
     party.members = party.members.filter(memberId => memberId.toString() !== userId);
     return party.save();
   }
+
+  async deleteParty(userId: string, partyId: string) {
+    const exist = this.model.exists({ _id: partyId });
+    if (!exist) throw new BadRequestException('Invalid Party ID');
+
+    const party = await this.model.findById(partyId);
+    if (userId !== party.owner.toString()) throw new BadRequestException("Only owner can delete party")
+
+    return this.model.findByIdAndDelete(partyId)
+  }
+
 }
