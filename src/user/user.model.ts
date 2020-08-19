@@ -6,7 +6,7 @@ export class User {
   @prop({ required: true, unique: true })
   username: string;
 
-  @prop()
+  @prop({ required: true, unique: true })
   email: string;
 
   @prop({ required: true, select: false })

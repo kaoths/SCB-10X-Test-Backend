@@ -9,7 +9,7 @@ import { UserModule } from 'src/user/user.module';
     JwtModule.register({
       secret: 'SCB-10X-Test-backend',
     }),
-    UserModule
+    UserModule,
   ],
   controllers: [AuthController],
   providers: [AuthService],

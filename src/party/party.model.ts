@@ -7,7 +7,7 @@ export class Party {
   @prop({ required: true })
   title: string;
 
-  @prop({ required: true})
+  @prop({ required: true })
   total: number;
 
   @prop({ ref: User, required: false })

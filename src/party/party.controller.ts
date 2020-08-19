@@ -1,8 +1,10 @@
 import {
   Body,
-  Controller, Delete,
+  Controller,
+  Delete,
   Get,
   Param,
+  Patch,
   Post,
   UseGuards,
 } from '@nestjs/common';
@@ -21,39 +23,41 @@ export class PartyController {
     return this.service.find();
   }
 
-  @Get(":id")
+  @Get(':id')
   findById(@Param('id') partyId: string) {
     return this.service.findById(partyId);
   }
 
-  @Get("joined")
+  @Get('joined')
   findJoinedParty(@UserId() id: string) {
-    return this.service.find({ members: id })
+    return this.service.find({ members: id });
   }
 
   @Post()
-  createNewParty(
-    @Body() dto: Party,
-    @UserId() creatorId: string
-  ) {
+  createNewParty(@Body() dto: Party, @UserId() creatorId: string) {
     return this.service.createParty(dto, creatorId);
   }
 
-  @Delete(':id')
-  deleteParty(
+  @Patch(':id')
+  updateParty(
     @UserId() userId: string,
-    @Param('id') partyId: string
+    @Param('id') partyId: string,
+    @Body() partyDto: Party,
   ) {
+    return this.service.updateParty(userId, partyId, partyDto);
+  }
+
+  @Delete(':id')
+  deleteParty(@UserId() userId: string, @Param('id') partyId: string) {
     return this.service.deleteParty(userId, partyId);
   }
 
-
-  @Post(":id/join")
+  @Post(':id/join')
   joinParty(@UserId() userId: string, @Param('id') partyId: string) {
     return this.service.joinParty(userId, partyId);
   }
 
-  @Post(":id/leave")
+  @Post(':id/leave')
   leaveParty(@UserId() userId: string, @Param('id') partyId: string) {
     return this.service.leaveParty(userId, partyId);
   }

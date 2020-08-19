@@ -13,7 +13,7 @@ import { AuthCredentialsDTO } from './auth.dto';
 export class AuthService {
   constructor(
     private readonly jwtService: JwtService,
-    private readonly userService: UserService
+    private readonly userService: UserService,
   ) {}
 
   async login(credentials: AuthCredentialsDTO): Promise<string> {
@@ -36,9 +36,9 @@ export class AuthService {
   }
 
   async validateUser({
-                       username,
-                       password,
-                     }: AuthCredentialsDTO): Promise<User> {
+    username,
+    password,
+  }: AuthCredentialsDTO): Promise<User> {
     const user: User = await this.userService.findOne({ username }, true);
     if (user && compareSync(password, user.password)) {
       return user;
@@ -48,7 +48,6 @@ export class AuthService {
 
   async sign(user: User): Promise<any> {
     return this.jwtService.sign({ userId: user._id });
-
   }
 
   verify(jwt: string): { userId: string } {

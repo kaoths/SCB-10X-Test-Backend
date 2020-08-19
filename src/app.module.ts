@@ -18,13 +18,13 @@ import { PartyModule } from './party/party.module';
     }),
     AuthModule,
     UserModule,
-    PartyModule
+    PartyModule,
   ],
   controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule implements NestModule{
+export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
-    consumer.apply(JwtMiddleware).forRoutes('*')
+    consumer.apply(JwtMiddleware).forRoutes('*');
   }
 }

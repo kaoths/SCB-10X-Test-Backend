@@ -10,12 +10,12 @@ import { UserModule } from '../user/user.module';
     TypegooseModule.forFeature([
       {
         typegooseClass: Party,
-        schemaOptions: { timestamps: true }
-      }
+        schemaOptions: { timestamps: true },
+      },
     ]),
-    UserModule
+    UserModule,
   ],
   controllers: [PartyController],
-  providers: [PartyService]
+  providers: [PartyService],
 })
 export class PartyModule {}
